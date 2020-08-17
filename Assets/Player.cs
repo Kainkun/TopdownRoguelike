@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+    public static Player instance;
     Camera mainCamera;
 
     #region Movement Variables
@@ -24,6 +25,7 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
+        instance = this;
         rb = GetComponent<Rigidbody2D>();
         mainCamera = Camera.main;
     }
