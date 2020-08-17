@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    public float damage = 1;
     SpriteRenderer sprite;
     public Vector2 movementVector;
     Vector2 lastPosition;
@@ -34,6 +35,7 @@ public class Projectile : MonoBehaviour
         RaycastHit2D hit = Physics2D.CircleCast(lastPosition, collisionRadius, position - lastPosition, (position - lastPosition).magnitude, validColliders);
         if (hit.collider != null)
         {
+            hit.collider.GetComponent<Entity>()?.TakeDamage(damage);
             Die(hit.centroid);
         }
         Debug.DrawRay(lastPosition, position - lastPosition, Color.red);
