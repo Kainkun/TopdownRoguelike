@@ -6,7 +6,9 @@ public class Projectile : MonoBehaviour
 {
     public float damage = 1;
     SpriteRenderer sprite;
+    Vector2 startPosition;
     public Vector2 movementVector;
+    public float maxDistance;
     Vector2 lastPosition;
     LayerMask validColliders;
     [SerializeField] float collisionRadius = 0.2f;
@@ -17,6 +19,7 @@ public class Projectile : MonoBehaviour
 
     private void Start()
     {
+        startPosition = transform.position;
         sprite = GetComponentInChildren<SpriteRenderer>();
         lineRenderer = GetComponentInChildren<LineRenderer>();
         lineRenderer.SetPosition(0, transform.position);
@@ -38,6 +41,12 @@ public class Projectile : MonoBehaviour
             hit.collider.GetComponent<Entity>()?.TakeDamage(damage);
             Die(hit.centroid);
         }
+
+        if(maxDistance != 0 && Vector2.Distance(startPosition, position) > maxDistance)
+        {
+            Die(startPosition + movementVector.normalized * maxDistance);
+        }
+
         Debug.DrawRay(lastPosition, position - lastPosition, Color.red);
     }
     private void LateUpdate()
@@ -51,7 +60,8 @@ public class Projectile : MonoBehaviour
         lineRenderer.SetPosition(1, positionOfDeath);
         lineRenderer.transform.parent = null;
         StartCoroutine(CR_Fade());
-        sprite.enabled = false;
+        if(sprite != null)
+            sprite.enabled = false;
         Destroy(Instantiate(ps_sparks, positionOfDeath, Quaternion.identity), 2);
     }
 
