@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 {
     public static Player instance;
     ActionSystem actionSystem;
+    public bool actionCooldown;
     Camera mainCamera;
     public Transform weapon;
     public Sword sword;
@@ -69,16 +70,18 @@ public class Player : MonoBehaviour
 
     public void LeftAttack(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && actionCooldown == false)
         {
+            actionCooldown = true;
             actionSystem.LeftAction();
         }
     }
 
     public void RightAttack(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && actionCooldown == false)
         {
+            actionCooldown = true;
             actionSystem.RightAction();
         }
     }

@@ -25,4 +25,9 @@ public class Sword : MonoBehaviour
     {
         col.enabled = false;
     }
+
+    public void AttackDone()
+    {
+        Player.instance.actionCooldown = false;
+    }
 }
