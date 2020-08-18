@@ -337,6 +337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c736b5c2cdba3b4eb4b9777a5394e07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionCooldown: 0
   weapon: {fileID: 982696116}
   sword: {fileID: 0}
   weaponAnimator: {fileID: 0}
@@ -360,7 +361,7 @@ Transform:
   - {fileID: 1708918592}
   - {fileID: 1182234473}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &176597108
 MonoBehaviour:
@@ -554,6 +555,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   swordTrail: {fileID: 9025696977608741945, guid: ee49cecd8ecb69f4aaa979b77e83b95d,
     type: 3}
+  swing: {fileID: 6152561927247255135, guid: ff4bbd28e5b12b148b18f3877b61defd, type: 3}
+  pierce: {fileID: 6152561927247255135, guid: baeb90b4e660ac740b42bcce605581a8, type: 3}
   pierceSpeed: 10
 --- !u!1 &209216120
 GameObject:
@@ -846,7 +849,7 @@ Transform:
   - {fileID: 2064258787}
   - {fileID: 683669088}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
@@ -1503,7 +1506,7 @@ GameObject:
   - component: {fileID: 982696116}
   - component: {fileID: 982696117}
   - component: {fileID: 982696118}
-  - component: {fileID: 982696119}
+  - component: {fileID: 7265591785884833632}
   m_Layer: 0
   m_Name: WeaponAxis
   m_TagString: Untagged
@@ -1572,19 +1575,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &982696119
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 982696115}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e970a55ec221a749b5edea7ab0f30bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 0
 --- !u!1 &1032983272
 GameObject:
   m_ObjectHideFlags: 0
@@ -3210,3 +3200,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a90fded457c348340ae88cf65531a484, type: 3}
+--- !u!114 &7265591785884833632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 982696115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e970a55ec221a749b5edea7ab0f30bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

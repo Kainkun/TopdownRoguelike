@@ -7,6 +7,8 @@ public class ActionSystem : MonoBehaviour
     delegate void Action();
     Player player;
     [SerializeField] GameObject swordTrail;
+    [SerializeField] GameObject swing;
+    [SerializeField] GameObject pierce;
 
     class ActionTreeNode
     {
@@ -63,35 +65,38 @@ public class ActionSystem : MonoBehaviour
         currentActionTreeNode = startingActionTreeNode;
     }
 
-    void Swing()
+    void Swing(float speed = 1)
     {
+        Attack tempAttack = Instantiate(swing, transform.position, transform.rotation).GetComponent<Attack>();
+        tempAttack.duration = 0.5f;
         player.weaponAnimator.SetTrigger("Swing");
+        player.weaponAnimator.speed = speed;
     }
     void FirstSwing()
     {
-        player.sword.damage = 1;
-        print("ching!");
+        //print("ching!");
         Swing();
     }
 
     void SecondSwing()
     {
-        player.sword.damage = 2;
-        print("chang!!");
+        //print("chang!!");
         Swing();
     }
 
     void ThirdSwing()
     {
-        player.sword.damage = 3;
-        print("pang!!!");
-        Swing();
+        //print("pang!!!");
+        Swing(2);
     }
 
     [SerializeField] float pierceSpeed = 10;
-    void Pierce(float speed, float maxDistance)
+    void Pierce(float speed = 1)
     {
+        Attack tempAttack = Instantiate(pierce, transform.position, transform.rotation).GetComponent<Attack>();
+        tempAttack.duration = 0.2f;
         player.weaponAnimator.SetTrigger("Pierce");
+        player.weaponAnimator.speed = speed;
         // var tempTrail = Instantiate(swordTrail).transform;
         // tempTrail.position = transform.position;
         // tempTrail.right = player.lookDirection;
@@ -100,22 +105,19 @@ public class ActionSystem : MonoBehaviour
     }
     void FirstPierce()
     {
-        player.sword.damage = 1;
-        print("stab!");
-        Pierce(pierceSpeed, 3);
+        //print("stab!");
+        Pierce();
     }
 
     void SecondPierce()
     {
-        player.sword.damage = 2;
-        print("Stab!!");
-        Pierce(pierceSpeed * 1.5f, 4);
+        //print("Stab!!");
+        Pierce();
     }
 
     void ThirdPierce()
     {
-        player.sword.damage = 3;
-        print("STAB!!!");
-        Pierce(pierceSpeed * 5, 5);
+        //print("STAB!!!");
+        Pierce(2);
     }
 }
