@@ -69,6 +69,7 @@ public class ActionSystem : MonoBehaviour
     {
         Attack tempAttack = Instantiate(swing, transform.position, transform.rotation).GetComponent<Attack>();
         tempAttack.duration = 0.5f;
+        tempAttack.movement = player.transform.up * 2;
         player.weaponAnimator.SetTrigger("Swing");
         player.weaponAnimator.speed = speed;
     }
@@ -95,6 +96,7 @@ public class ActionSystem : MonoBehaviour
     {
         Attack tempAttack = Instantiate(pierce, transform.position, transform.rotation).GetComponent<Attack>();
         tempAttack.duration = 0.2f;
+        tempAttack.movement = player.transform.up * 2;
         player.weaponAnimator.SetTrigger("Pierce");
         player.weaponAnimator.speed = speed;
         // var tempTrail = Instantiate(swordTrail).transform;

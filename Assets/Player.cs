@@ -19,6 +19,8 @@ public class Player : MonoBehaviour
     float moveSpeed = 1, movementAcceleration = 0.5f;
     Vector2 movementInput;
     Vector2 movement;
+    Vector2 lastPosition;
+    public Vector2 velocity;
     #endregion
 
     #region Shooting Variables
@@ -45,11 +47,17 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        velocity = ((Vector2)transform.position - lastPosition)/Time.deltaTime;
         lookDirection = mainCamera.ScreenToWorldPoint(pointerPosition) - transform.position;
         lookDirection.Normalize();
         transform.up = lookDirection;
 
         movement = Vector2.Lerp(movement, movementInput, movementAcceleration * Time.deltaTime);
+    }
+
+    void LateUpdate()
+    {
+        lastPosition = transform.position;
     }
 
 

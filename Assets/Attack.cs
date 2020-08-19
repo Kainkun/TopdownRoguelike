@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Attack : MonoBehaviour
 {
+    public Vector2 movement;
     public float damage = 1;
     public float duration = 1;
     float time;
@@ -21,6 +22,7 @@ public class Attack : MonoBehaviour
 
     private void Update()
     {
+        transform.position += (Vector3)movement * Time.deltaTime;
         time += Time.deltaTime;
         if(time > 0.2f)
         {
