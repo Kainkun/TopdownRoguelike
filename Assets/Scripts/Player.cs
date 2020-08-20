@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     public static Player instance;
-    ActionSystem actionSystem;
+    public ActionSystem actionSystem;
     public bool actionCooldown;
     Camera mainCamera;
     public Transform weapon;

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Attack : MonoBehaviour
 {
     public Vector2 movement;
+    public Vector2 knockBack;
     public float damage = 1;
     public float duration = 1;
     float time;

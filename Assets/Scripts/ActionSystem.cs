@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class ActionSystem : MonoBehaviour
 {
-    delegate void Action();
+    public delegate void Action();
     Player player;
     [SerializeField] GameObject swordTrail;
     [SerializeField] GameObject swing;
     [SerializeField] GameObject pierce;
+    [SerializeField] GameObject bigPierce;
+    [SerializeField] GameObject pushBack;
 
-    class ActionTreeNode
+    public class ActionTreeNode
     {
         public ActionTreeNode(Action action)
         {
@@ -22,24 +24,36 @@ public class ActionSystem : MonoBehaviour
         public ActionTreeNode nextRightActionNode;
     }
 
-    ActionTreeNode startingActionTreeNode;
+    public ActionTreeNode startingActionTreeNode;
     ActionTreeNode currentActionTreeNode;
 
-    void Start()
+    public static ActionSystem instance;
+    private void Awake()
     {
+        instance = this;
         player = Player.instance;
 
         startingActionTreeNode = new ActionTreeNode(null);
 
-        startingActionTreeNode.nextLeftActionNode = new ActionTreeNode(FirstSwing);
-        startingActionTreeNode.nextLeftActionNode.nextLeftActionNode = new ActionTreeNode(SecondSwing);
-        startingActionTreeNode.nextLeftActionNode.nextLeftActionNode.nextLeftActionNode = new ActionTreeNode(ThirdSwing);
+        startingActionTreeNode.nextLeftActionNode = new ActionTreeNode(Swing);
+        var L = startingActionTreeNode.nextLeftActionNode;
+        L.nextLeftActionNode = new ActionTreeNode(Swing);
+        var LL = L.nextLeftActionNode;
+        LL.nextLeftActionNode = new ActionTreeNode(Swing);
+        LL.nextRightActionNode = new ActionTreeNode(PushBack);
 
-        startingActionTreeNode.nextRightActionNode = new ActionTreeNode(FirstPierce);
-        startingActionTreeNode.nextRightActionNode.nextRightActionNode = new ActionTreeNode(SecondPierce);
-        startingActionTreeNode.nextRightActionNode.nextRightActionNode.nextRightActionNode = new ActionTreeNode(ThirdPierce);
+        startingActionTreeNode.nextRightActionNode = new ActionTreeNode(Pierce);
+        var R = startingActionTreeNode.nextRightActionNode;
+        R.nextRightActionNode = new ActionTreeNode(Pierce);
+        var RR = R.nextRightActionNode;
+        RR.nextRightActionNode = new ActionTreeNode(BigPierce);
 
         ResetActionCombo();
+    }
+
+    void Start()
+    {
+
     }
 
     public void LeftAction()
@@ -65,61 +79,35 @@ public class ActionSystem : MonoBehaviour
         currentActionTreeNode = startingActionTreeNode;
     }
 
-    void Swing(float speed = 1)
+    public void Swing()
     {
         Attack tempAttack = Instantiate(swing, transform.position, transform.rotation).GetComponent<Attack>();
         tempAttack.duration = 0.5f;
         tempAttack.movement = player.transform.up * 2;
         player.weaponAnimator.SetTrigger("Swing");
-        player.weaponAnimator.speed = speed;
-    }
-    void FirstSwing()
-    {
-        //print("ching!");
-        Swing();
     }
 
-    void SecondSwing()
-    {
-        //print("chang!!");
-        Swing();
-    }
-
-    void ThirdSwing()
-    {
-        //print("pang!!!");
-        Swing(2);
-    }
-
-    [SerializeField] float pierceSpeed = 10;
-    void Pierce(float speed = 1)
+    public void Pierce()
     {
         Attack tempAttack = Instantiate(pierce, transform.position, transform.rotation).GetComponent<Attack>();
         tempAttack.duration = 0.2f;
         tempAttack.movement = player.transform.up * 2;
         player.weaponAnimator.SetTrigger("Pierce");
-        player.weaponAnimator.speed = speed;
-        // var tempTrail = Instantiate(swordTrail).transform;
-        // tempTrail.position = transform.position;
-        // tempTrail.right = player.lookDirection;
-        // tempTrail.GetComponent<Projectile>().movementVector = player.lookDirection * speed;
-        // tempTrail.GetComponent<Projectile>().maxDistance = maxDistance;
-    }
-    void FirstPierce()
-    {
-        //print("stab!");
-        Pierce();
     }
 
-    void SecondPierce()
+    public void BigPierce()
     {
-        //print("Stab!!");
-        Pierce();
+        Attack tempAttack = Instantiate(bigPierce, transform.position, transform.rotation).GetComponent<Attack>();
+        tempAttack.duration = 0.5f;
+        tempAttack.movement = player.transform.up * 2;
+        player.weaponAnimator.SetTrigger("Pierce");
     }
 
-    void ThirdPierce()
+    public void PushBack()
     {
-        //print("STAB!!!");
-        Pierce(2);
+        Attack tempAttack = Instantiate(pushBack, transform.position, transform.rotation).GetComponent<Attack>();
+        tempAttack.duration = 0.5f;
+        tempAttack.movement = player.transform.up * 2;
+        player.weaponAnimator.SetTrigger("PushBack");
     }
 }
