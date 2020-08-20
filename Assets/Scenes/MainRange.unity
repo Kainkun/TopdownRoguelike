@@ -340,7 +340,7 @@ MonoBehaviour:
   movementAcceleration: 20
   velocity: {x: 0, y: 0}
   lookDirection: {x: 0, y: 0}
-  projectile: {fileID: 9025696977608741945, guid: a0b174e5237d96647b6045a7c8d37595,
+  projectile: {fileID: 9025696977608741945, guid: e39e3011d43a1564e8705c61bcb34da0,
     type: 3}
   projectileSpeed: 150
 --- !u!4 &176597107

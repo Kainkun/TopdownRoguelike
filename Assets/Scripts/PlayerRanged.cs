@@ -79,6 +79,15 @@ public class PlayerRanged : MonoBehaviour
     void ShootProjectile()
     {
         var tempBullet = Instantiate(projectile).transform;
+        tempBullet.position = transform.position;
+        tempBullet.right = lookDirection;
+        tempBullet.GetComponent<PlayerProjectile>().startMovementDirection = lookDirection;
+        tempBullet.GetComponent<PlayerProjectile>().startSpeed = projectileSpeed;
+    }
+
+    void oldShootProjectile()
+    {
+        var tempBullet = Instantiate(projectile).transform;
         tempBullet.position = transform.position; //(Vector2)transform.position + lookDirection * 2;
         tempBullet.right = lookDirection;
         tempBullet.GetComponent<Projectile>().movementVector = lookDirection * projectileSpeed;

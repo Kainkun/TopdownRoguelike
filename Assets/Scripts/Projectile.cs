@@ -4,18 +4,26 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    #region Stats Variables
     public float damage = 1;
-    SpriteRenderer sprite;
-    Vector2 startPosition;
-    public Vector2 movementVector;
     public float maxDistance;
+    [SerializeField] float collisionRadius = 0.2f;
+    #endregion
+
+    #region Properties Variables
+    SpriteRenderer sprite;
+    public Vector2 movementVector;
+    [SerializeField] float timeToFadeOut = 2;
+    #endregion
+
+    #region Management Variables
+    Vector2 startPosition;
     Vector2 lastPosition;
     LayerMask validColliders;
-    [SerializeField] float collisionRadius = 0.2f;
-    [SerializeField] GameObject ps_sparks;
     LineRenderer lineRenderer;
-    [SerializeField] float timeToFadeOut = 2;
+    [SerializeField] GameObject ps_sparks;
     bool dead;
+    #endregion
 
     private void Start()
     {
@@ -28,7 +36,7 @@ public class Projectile : MonoBehaviour
     }
     void Update()
     {
-        if(dead)
+        if (dead)
             return;
 
         transform.position += (Vector3)movementVector * Time.deltaTime;
@@ -42,7 +50,7 @@ public class Projectile : MonoBehaviour
             Die(hit.centroid);
         }
 
-        if(maxDistance != 0 && Vector2.Distance(startPosition, position) > maxDistance)
+        if (maxDistance != 0 && Vector2.Distance(startPosition, position) > maxDistance)
         {
             Die(startPosition + movementVector.normalized * maxDistance);
         }
@@ -53,18 +61,16 @@ public class Projectile : MonoBehaviour
     {
         lastPosition = transform.position;
     }
-
     void Die(Vector2 positionOfDeath)
     {
         dead = true;
         lineRenderer.SetPosition(1, positionOfDeath);
         lineRenderer.transform.parent = null;
         StartCoroutine(CR_Fade());
-        if(sprite != null)
+        if (sprite != null)
             sprite.enabled = false;
         Destroy(Instantiate(ps_sparks, positionOfDeath, Quaternion.identity), 2);
     }
-
     IEnumerator CR_Fade()
     {
         while (lineRenderer.endColor.a > 0)
@@ -78,7 +84,6 @@ public class Projectile : MonoBehaviour
 
         Destroy(gameObject);
     }
-
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
